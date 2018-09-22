@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">currencyConverter</string>
+    <string name="api_key">latest?access_key=9a56b78f60c20614986266c8bce163f7</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
