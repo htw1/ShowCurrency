@@ -5,11 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data class ="CurrencyBindingItem">
+
       <variable name="currencyItem" type="com.example.htw.currencyconverter.model.CurrencyBinding"/>
       <variable name="callback" type="com.example.htw.currencyconverter.callback.ClickCallback"/>
+      <variable name="clickCustomlistener" type="android.view.View.OnClickListener" />
   </data>
 
     <android.support.v7.widget.CardView
+        app:onClickListener="@{clickCustomlistener}"
+        android:id="@+id/cardViewIten"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -19,6 +23,7 @@
         app:cardUseCompatPadding="true">
 
         <android.support.constraint.ConstraintLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -65,7 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{currencyItem.value}" />
+                android:text="@{currencyItem.value}"
+                />
         </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>

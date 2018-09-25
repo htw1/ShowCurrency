@@ -5,12 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.htw.currencyconverter.R;
 import com.example.htw.currencyconverter.callback.ClickCallback;
+import com.example.htw.currencyconverter.callback.CustomItemClickListener;
 import com.example.htw.currencyconverter.databinding.CurrencyBindingDate;
 import com.example.htw.currencyconverter.databinding.CurrencyBindingItem;
 import com.example.htw.currencyconverter.model.Currency;
@@ -24,17 +26,20 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecyclerAdapter.AbstractCurrencyViewHolder> {
+public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecyclerAdapter.AbstractCurrencyViewHolder>  {
 
     final private int CURRENCY_VALUE_VIEW = 0;
     final private int CURRENCY_DATE_VIEW = 1;
 
-    @Nullable
-    private final ClickCallback clickCallback;
 
+    CustomItemClickListener mCustomOnItemClickListener;
+    ClickCallback clickCallback;
+
+    @Nullable
     private List<CurrencyItemsList> currencyList = new ArrayList<>();
 
     public CurrencyRecyclerAdapter(@Nullable ClickCallback clickCallback) {
+
         this.clickCallback = clickCallback;
     }
 
@@ -71,6 +76,9 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
         returnList.addAll(result);
         return returnList;
     }
+
+
+
     //SORTING BY KEY
     public class CustomComparator implements Comparator<CurrencyBinding> {
         @Override
@@ -81,23 +89,39 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
 
     @Override
     public AbstractCurrencyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         if(viewType == CURRENCY_DATE_VIEW){
             CurrencyBindingDate bindingDate  = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_header_recycler, parent, false);
+
             return new CurrencyDateViewHolder(bindingDate);
         }
         if(viewType == CURRENCY_VALUE_VIEW){
             CurrencyBindingItem bindingValue = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.inner_recycler_layout, parent, false);
+
             bindingValue.setCallback(clickCallback);
+
             return new CurrencyViewHolder(bindingValue);
         }
         return null;
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull AbstractCurrencyViewHolder holder, int position) {
 
         if(holder instanceof CurrencyViewHolder ){
             ((CurrencyViewHolder)holder).bindingValue.setCurrencyItem((CurrencyBinding) currencyList.get(position));
+            //Log.w("onBindViewHolder", ((CurrencyBinding) currencyList.get(position)).toString());
+            ((CurrencyViewHolder) holder).bindingValue.setClickCustomlistener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.w("onClick", ((CurrencyBinding) currencyList.get(position)).toString());
+                    mCustomOnItemClickListener.onItemClick(view, (CurrencyBinding) currencyList.get(position));
+
+                }
+            });
+
 
             ((CurrencyViewHolder)holder).bindingValue.executePendingBindings();
         }
@@ -107,7 +131,6 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
 
             ((CurrencyDateViewHolder)holder).bindingValue.executePendingBindings();
         }
-
     }
 
     @Override
@@ -129,32 +152,38 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
 
     abstract class AbstractCurrencyViewHolder extends RecyclerView.ViewHolder{
 
+        private View itemView;
+
         public AbstractCurrencyViewHolder(View itemView) {
             super(itemView);
         }
+
+
+
     }
 
-    class CurrencyViewHolder extends AbstractCurrencyViewHolder implements View.OnClickListener {
+    class CurrencyViewHolder extends AbstractCurrencyViewHolder {
 
-
-        final CurrencyBindingItem bindingValue;
+                CurrencyRecyclerAdapter adapter;
+         final CurrencyBindingItem bindingValue;
+        CurrencyBinding currencyItem;
 
         public CurrencyViewHolder(CurrencyBindingItem bindingValue) {
             super(bindingValue.getRoot());
-
             this.bindingValue = bindingValue;
-
+        }
+        public CurrencyBindingItem getBinding() {
+            return bindingValue;
         }
 
-        @Override
-        public void onClick(View view) {
 
-        }
+
     }
 
     class CurrencyDateViewHolder extends AbstractCurrencyViewHolder {
 
         final CurrencyBindingDate bindingValue;
+
 
         public CurrencyDateViewHolder(CurrencyBindingDate bindingValue) {
             super(bindingValue.getRoot());

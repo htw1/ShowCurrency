@@ -1,9 +1,24 @@
 package com.example.htw.currencyconverter.model;
 
+import java.util.List;
+
 public class CurrencyBinding extends CurrencyItemsList{
 
-    public CurrencyBinding() {
+
+
+    public CurrencyBinding(String name) {
+        this.name=name;
     }
+
+
+
+    @Override
+    public String toString() {
+        return "CurrencyBinding{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
 
     private String name;
     private Double value;
@@ -21,6 +36,7 @@ public class CurrencyBinding extends CurrencyItemsList{
     public void setValue(Double value) {
         this.value = value;
     }
+
 
     public CurrencyBinding(String name, Double value){
         this.name = name;

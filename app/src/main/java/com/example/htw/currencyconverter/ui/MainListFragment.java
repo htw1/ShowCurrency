@@ -29,9 +29,6 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
     public static final String KEY_MAIN_FRAGMENT_ID = "MainListFragment";
     MainFragment binding;
 
-
-
-
     CurrencyRecyclerAdapter currencyRecyclerAdapter;
     private LifecycleRegistry mLifecycleRegistry;
     private CurrencyViewModel viewModel;
@@ -48,10 +45,7 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_currency_main_list, container, false);
         mLifecycleRegistry = new LifecycleRegistry(this);
         mLifecycleRegistry.markState(Lifecycle.State.CREATED);
-
-
         currencyRecyclerAdapter = new CurrencyRecyclerAdapter(clickCallback);
-
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerView.setAdapter(currencyRecyclerAdapter);
         binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -68,7 +62,6 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
             }
         });
 
-        // Create and set the adapter for the RecyclerView.
         return binding.getRoot();
     }
 
@@ -102,15 +95,12 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
         });
     }
 
-    @NonNull
-    @Override
-    public Lifecycle getLifecycle() {
-        return mLifecycleRegistry;
-    }
+
 
 
 
     private final ClickCallback clickCallback = new ClickCallback() {
+
         @Override
         public void onClick(CurrencyBinding element) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {

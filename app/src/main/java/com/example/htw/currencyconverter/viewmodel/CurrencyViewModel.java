@@ -25,6 +25,8 @@ import retrofit2.Retrofit;
 
 public class CurrencyViewModel extends ViewModel {
 
+
+
     private MutableLiveData<Currency> currencyData;
     private MutableLiveData<Currency> currencyOldData;
 

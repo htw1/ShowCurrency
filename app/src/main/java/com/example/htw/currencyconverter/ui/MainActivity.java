@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 
 import com.example.htw.currencyconverter.R;
@@ -26,18 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null){
 
-            MainListFragment fragment = new MainListFragment();
+            MainListFragment mainFragment = new MainListFragment();
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, fragment, MainListFragment.KEY_MAIN_FRAGMENT_ID )
+                    .add(R.id.fragment_container, mainFragment, MainListFragment.KEY_MAIN_FRAGMENT_ID )
                     .commit();
         }
 
     }
-    public void showDeatail(CurrencyBinding project) {
-        DetailListFragment detailFragment = DetailListFragment.fragmentToFragment(project.getName());
+    public void showDeatail(CurrencyBinding element) {
 
+        DetailListFragment detailFragment = DetailListFragment.fragmentToFragment(element.getValue());
+        //Toast.makeText(getApplicationContext(), element.getValue(), Toast.LENGTH_LONG).show();
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack("project")
