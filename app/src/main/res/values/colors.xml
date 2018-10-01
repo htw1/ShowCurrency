@@ -10,7 +10,17 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
-
+    <color name="black_material_900">#212121</color>
+    <color name="black_material_800">#424242</color>
+    <color name="black_material_700">#616161</color>
+    <color name="black_material_600">#757575</color>
+    <color name="black_material_500">#9E9E9E</color>
+    <color name="black_material_100">#F5F5F5</color>
+    <color name="black_material_200">#EEEEEE</color>
+    <color name="black_material_300">#E0E0E0</color>
+    <color name="black_material_400">#BDBDBD</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
 
 </resources>

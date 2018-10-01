@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -30,6 +31,11 @@ public class CurrencyViewModel extends ViewModel {
     private MutableLiveData<Currency> currencyData;
     private MutableLiveData<Currency> currencyOldData;
 
+    public ObservableField<String> getServerDate() {
+        return serverDate;
+    }
+
+    ObservableField<String> serverDate;
     private FixerService fixerService;
     private SimpleDateFormat stringDataFormat = new SimpleDateFormat("yyyy-MM-dd");
     private String actualData;
@@ -59,11 +65,14 @@ public class CurrencyViewModel extends ViewModel {
         return currencyData;
     }
 
+
+
     private void loadDataFromServer(){
         fixerService.getProjectList().enqueue(new Callback<Currency>() {
             @Override
             public void onResponse(@NonNull Call<Currency> call, @NonNull Response<Currency> response) {
                 Log.w("currentList_response", response.toString());
+                //serverDate = response.body().getDate();
                 actualData = response.body().getDate();
                 currencyData.setValue(response.body());
             }
@@ -96,6 +105,8 @@ public class CurrencyViewModel extends ViewModel {
             });
         }
     }
+
+
 
     private String decrementDate() {
         try {

@@ -23,7 +23,6 @@
         app:cardUseCompatPadding="true">
 
         <android.support.constraint.ConstraintLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -55,23 +54,24 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:textStyle="bold"
-                android:textColor="@color/primary_text"
-                android:layout_marginRight="15dp"
                 android:id="@+id/symbol_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{currencyItem.name}" />
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@{currencyItem.name}"
+                android:textColor="@color/primary_text"
+                android:textStyle="bold" />
 
             <TextView
-                android:textColor="@color/secondary_text"
                 android:id="@+id/value_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/montserrat"
                 android:text="@{currencyItem.value}"
-                />
+                android:textColor="@color/secondary_text" />
         </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>

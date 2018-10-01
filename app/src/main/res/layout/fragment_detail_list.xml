@@ -6,50 +6,154 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class ="CurrencyBindingDetailItem">
-
+        <import type="com.example.htw.currencyconverter.utils.DateUtils"/>
+        <import type="android.view.View" />
         <variable name="currencyItemDetailDate" type="com.example.htw.currencyconverter.model.CurrencyDate"/>
         <variable name="currencyBindingItemDetail" type="com.example.htw.currencyconverter.model.CurrencyBinding"/>
         <variable name="callback" type="com.example.htw.currencyconverter.callback.ClickCallback"/>
     </data>
 
+
         <LinearLayout
+            android:background="@color/white"
+            android:weightSum="3"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageCurrency"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical">
 
             <ImageView
+                android:layout_margin="25dp"
+                android:layout_weight="1"
                 android:layout_marginTop="25dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_monetization_on_black_detail"
+                android:src="@drawable/currency_background_black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="0dp" />
 
-            <TextView
-                android:textSize="28dp"
-                android:layout_marginTop="150dp"
-                tools:text="John Doe"
-                android:gravity="center"
-                android:textColor="@color/primary_text"
-                android:id="@+id/symbol_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@{currencyBindingItemDetail.value}" />
+    <android.support.v7.widget.CardView
 
-            <TextView
-                android:textSize="28dp"
-                android:text="@{currencyItemDetailDate.date}"
-                android:textColor="@color/primary_text"
-                android:id="@+id/date_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+        android:layout_weight="1"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
 
-                 />
+        <FrameLayout
+            android:background="@color/black_material_200"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+             <TextView
+                 android:textSize="19dp"
+                 android:textColor="@color/black_material_900"
+                 android:layout_gravity="center"
+                 android:text="Currency value"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+<TextView
+
+    android:textSize="14dp"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:text="rounded value"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:id="@+id/symbol_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/black_material_700"
+            android:textSize="18dp"
+            app:roundingText="@{currencyBindingItemDetail.value}"
+            tools:text="John Doe" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+
+                android:layout_weight="1"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:background="@color/black_material_200"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:textSize="19dp"
+                        android:textColor="@color/black_material_900"
+                        android:layout_gravity="center"
+                        android:text="Date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/black_material_800"
+                        android:textSize="14dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:layout_gravity="center"
+                        android:layout_width="35dp"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:textColor="@color/black_material_700"
+                        android:textSize="18dp"
+                        android:id="@+id/date_text"
+                        app:bindFriendlyServerDate="@{currencyItemDetailDate.date}"
+                         />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
         </LinearLayout>
 
 </layout>

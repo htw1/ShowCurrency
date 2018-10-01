@@ -102,9 +102,9 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
     private final ClickCallback clickCallback = new ClickCallback() {
 
         @Override
-        public void onClick(CurrencyBinding element) {
+        public void onClick(CurrencyBinding currencyName) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                ((MainActivity) getActivity()).showDeatail(element);
+                ((MainActivity) getActivity()).showDeatail(currencyName);
 
             }
         }
