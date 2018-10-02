@@ -26,16 +26,9 @@ import retrofit2.Retrofit;
 
 public class CurrencyViewModel extends ViewModel {
 
-
-
     private MutableLiveData<Currency> currencyData;
     private MutableLiveData<Currency> currencyOldData;
 
-    public ObservableField<String> getServerDate() {
-        return serverDate;
-    }
-
-    ObservableField<String> serverDate;
     private FixerService fixerService;
     private SimpleDateFormat stringDataFormat = new SimpleDateFormat("yyyy-MM-dd");
     private String actualData;
@@ -72,7 +65,6 @@ public class CurrencyViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<Currency> call, @NonNull Response<Currency> response) {
                 Log.w("currentList_response", response.toString());
-                //serverDate = response.body().getDate();
                 actualData = response.body().getDate();
                 currencyData.setValue(response.body());
             }

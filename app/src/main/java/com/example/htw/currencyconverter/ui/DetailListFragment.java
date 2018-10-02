@@ -76,6 +76,8 @@ public class DetailListFragment extends Fragment implements LifecycleOwner {
                 .of(getActivity())
                 .get(CurrencyViewModel.class);
         observeViewModelDate(viewModel);
+
+
     }
     public String getBundleString(Bundle b, String key, String def)
     {
@@ -89,7 +91,7 @@ public class DetailListFragment extends Fragment implements LifecycleOwner {
     }
 
     private void observeViewModelDate(CurrencyViewModel currencyViewModel) {
-        currencyViewModel.getActualCurrency().observe(getActivity(), new Observer<Currency>() {
+        currencyViewModel.getOldCurrency().observe(getActivity(), new Observer<Currency>() {
             @Override
             public void onChanged(@Nullable Currency currency) {
                 binding.setCurrencyItemDetailDate(new CurrencyDate(currency.getDate()));
