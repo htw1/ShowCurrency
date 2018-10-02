@@ -22,6 +22,12 @@ public class CurrencyBinding extends CurrencyItemsList{
 
     private String name;
     private Double value;
+    private String date;
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+    public String getDate() { return date; }
 
     public String getValue() { return value.toString(); }
 
@@ -38,9 +44,10 @@ public class CurrencyBinding extends CurrencyItemsList{
     }
 
 
-    public CurrencyBinding(String name, Double value){
+    public CurrencyBinding(String name, Double value, String date ){
         this.name = name;
         this.value = value;
+        this.date = date;
     }
 }
 

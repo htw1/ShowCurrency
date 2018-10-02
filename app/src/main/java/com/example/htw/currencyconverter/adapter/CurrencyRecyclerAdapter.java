@@ -68,7 +68,7 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
     private List<CurrencyItemsList> ratesFactory(Map<String, Double> mapResult, String date){
         List<CurrencyBinding> result= new ArrayList<>();
         for (Map.Entry<String, Double> entry : mapResult.entrySet()) {
-            result.add(new CurrencyBinding(entry.getKey(),entry.getValue()));
+            result.add(new CurrencyBinding(entry.getKey(),entry.getValue(),date));
         }
         Collections.sort(result, new CustomComparator());
         ArrayList<CurrencyItemsList> returnList = new ArrayList<>();
@@ -117,7 +117,7 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
                 @Override
                 public void onClick(View view) {
                     Log.w("onClick", ((CurrencyBinding) currencyList.get(position)).toString());
-                        //mCustomOnItemClickListener.onItemClick(view, (CurrencyBinding) currencyList.get(position));
+                        mCustomOnItemClickListener.onItemClick(view, (CurrencyBinding) currencyList.get(position));
                 }
             });*/
 

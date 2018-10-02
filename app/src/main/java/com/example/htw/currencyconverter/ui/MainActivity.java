@@ -38,10 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void showDeatail(CurrencyBinding element) {
-
-        DetailListFragment detailFragment = DetailListFragment.fragmentToFragment(element.getValue());
-
-        //Toast.makeText(getApplicationContext(), element.getValue(), Toast.LENGTH_LONG).show();
+        DetailListFragment detailFragment = DetailListFragment.fragmentToFragment(element.getValue(), element.getDate());
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack("project")
