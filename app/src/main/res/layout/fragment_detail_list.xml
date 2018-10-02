@@ -15,7 +15,7 @@
 
 
         <LinearLayout
-            android:background="@color/white"
+            android:background="@color/black_material_100"
             android:weightSum="3"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_height="0dp" />
 
     <android.support.v7.widget.CardView
-
+        app:cardCornerRadius="20dp"
         android:layout_weight="1"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
@@ -42,17 +42,17 @@
         android:orientation="vertical">
 
         <FrameLayout
-            android:background="@color/black_material_200"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="41dp"
+            android:background="@color/black_material_700">
 
-             <TextView
-                 android:textSize="19dp"
-                 android:textColor="@color/black_material_900"
-                 android:layout_gravity="center"
-                 android:text="Currency value"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Currency Value"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
 
         </FrameLayout>
 
@@ -64,28 +64,29 @@
             android:layout_height="wrap_content">
 
 <TextView
-
+    android:textColor="@color/black_material_700"
     android:textSize="14dp"
     android:layout_gravity="center"
     android:gravity="center"
-    android:text="rounded value"
+    android:text="Value"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
 
         <View
-            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:background="@color/black_material_700" />
 
         <TextView
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
             android:layout_gravity="center"
             android:id="@+id/symbol_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
-            android:textColor="@color/black_material_700"
-            android:textSize="18dp"
+            android:textColor="@color/black_material_800"
+            android:textSize="17dp"
             app:roundingText="@{currencyBindingItemDetail.value}"
             tools:text="John Doe" />
 
@@ -93,7 +94,7 @@
     </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-
+                app:cardCornerRadius="20dp"
                 android:layout_weight="1"
                 android:layout_marginRight="50dp"
                 android:layout_marginLeft="50dp"
@@ -103,15 +104,15 @@
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:background="@color/black_material_200"
+                    android:background="@color/black_material_700"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="41dp">
 
                     <TextView
-                        android:textSize="19dp"
-                        android:textColor="@color/black_material_900"
+                        android:textSize="18dp"
+                        android:textColor="@color/white"
                         android:layout_gravity="center"
-                        android:text="Date"
+                        android:text="Actual Date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -125,7 +126,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:textColor="@color/black_material_800"
+                        android:textColor="@color/black_material_700"
                         android:textSize="14dp"
                         android:layout_gravity="center"
                         android:gravity="center"
@@ -135,21 +136,22 @@
 
                     <View
                         android:layout_gravity="center"
-                        android:layout_width="35dp"
+                        android:layout_width="33dp"
                         android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
+                        android:background="@color/black_material_700" />
                     <TextView
-                        android:layout_marginTop="5dp"
+                        android:text="2222"
+                        android:layout_marginTop="7dp"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
-                        android:textColor="@color/black_material_700"
-                        android:textSize="18dp"
+                        android:textColor="@color/black_material_800"
+                        android:textSize="17dp"
                         android:id="@+id/date_text"
                         app:bindFriendlyServerDate="@{currencyItemDetailDate.date}"
                          />
+
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

@@ -112,15 +112,14 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
 
         if(holder instanceof CurrencyViewHolder ){
             ((CurrencyViewHolder)holder).bindingValue.setCurrencyItem((CurrencyBinding) currencyList.get(position));
-            //Log.w("onBindViewHolder", ((CurrencyBinding) currencyList.get(position)).toString());
-            ((CurrencyViewHolder) holder).bindingValue.setClickCustomlistener(new View.OnClickListener() {
+            // for test
+/*            ((CurrencyViewHolder) holder).bindingValue.setClickCustomlistener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.w("onClick", ((CurrencyBinding) currencyList.get(position)).toString());
-                    mCustomOnItemClickListener.onItemClick(view, (CurrencyBinding) currencyList.get(position));
-
+                        //mCustomOnItemClickListener.onItemClick(view, (CurrencyBinding) currencyList.get(position));
                 }
-            });
+            });*/
 
 
             ((CurrencyViewHolder)holder).bindingValue.executePendingBindings();

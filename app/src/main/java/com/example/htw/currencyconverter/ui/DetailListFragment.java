@@ -105,7 +105,7 @@ public class DetailListFragment extends Fragment implements LifecycleOwner {
         /*Parse string data and set it in another format for your textView*/
 
         SimpleDateFormat fromServer = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat myFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+        SimpleDateFormat myFormat = new SimpleDateFormat("EEEE,  d MMMM yyyy");
         Date date = null;
         try {
             date = fromServer.parse(reciveDate);
