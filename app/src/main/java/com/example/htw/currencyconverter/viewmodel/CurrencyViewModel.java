@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableField;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -92,9 +93,11 @@ public class CurrencyViewModel extends ViewModel {
             fixerService.getOldProjectList(actualData).enqueue(new Callback<Currency>() {
                 @Override
                 public void onResponse(@NonNull Call<Currency> call, @NonNull Response<Currency> response) {
+                    currencyOldData.setValue(response.body());
                     Log.w("OldList_call", call.toString());
                     Log.w("OldList_response", response.toString());
-                    currencyOldData.setValue(response.body());
+
+
                 }
 
                 @Override

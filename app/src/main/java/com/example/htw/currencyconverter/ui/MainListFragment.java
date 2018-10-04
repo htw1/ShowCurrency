@@ -5,16 +5,25 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.htw.currencyconverter.R;
 import com.example.htw.currencyconverter.adapter.CurrencyRecyclerAdapter;
@@ -28,11 +37,12 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
 
     public static final String KEY_MAIN_FRAGMENT_ID = "MainListFragment";
     MainFragment binding;
-
+    private RecyclerView.LayoutManager mLayoutManager;
     CurrencyRecyclerAdapter currencyRecyclerAdapter;
     private LifecycleRegistry mLifecycleRegistry;
     private CurrencyViewModel viewModel;
     private Boolean isLoadingActive = false;
+
 
     public MainListFragment() {
         // Required empty public constructor
@@ -43,16 +53,18 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_currency_main_list, container, false);
+
         mLifecycleRegistry = new LifecycleRegistry(this);
         mLifecycleRegistry.markState(Lifecycle.State.CREATED);
-        currencyRecyclerAdapter = new CurrencyRecyclerAdapter(clickCallback);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mLayoutManager = new LinearLayoutManager(this.getContext());
+        currencyRecyclerAdapter = new CurrencyRecyclerAdapter(clickCallback );
+        binding.recyclerView.setLayoutManager(mLayoutManager);
         binding.recyclerView.setAdapter(currencyRecyclerAdapter);
+
         binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
                 if (!recyclerView.canScrollVertically(1)) {
                     if(!isLoadingActive) {
                         isLoadingActive = true;
@@ -82,22 +94,58 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
         currencyViewModel.getActualCurrency().observe(getActivity(), new Observer<Currency>() {
             @Override
             public void onChanged(@Nullable Currency currency) {
+                binding.setIsLoading(false);
+
                 currencyRecyclerAdapter.setProjectList(currency);
+
             }
         });
 
         currencyViewModel.getOldCurrency().observe(getActivity(), new Observer<Currency>() {
             @Override
             public void onChanged(@Nullable Currency currency) {
-                currencyRecyclerAdapter.updateProjectList(currency);
+                binding.setIsLoading(true);
+/*                ProgressBarAnimation anim = new ProgressBarAnimation(binding.progressBar,  0.0f,1.0f);
+                anim.setDuration(2000);
+                binding.progressBar.startAnimation(anim);*/
+                Handler myHandler = new Handler();
+                myHandler.postDelayed(
+                        ()-> {
+                            currencyRecyclerAdapter.notifyDataSetChanged();
+                            currencyRecyclerAdapter.updateProjectList(currency);
+                            binding.setIsLoading(false);
+
+                            myHandler.postDelayed(
+                                    ()->{Toast.makeText(getActivity(), "New day !", Toast.LENGTH_SHORT).show();
+                                    },700);
+
+                        },1000);
+
                 isLoadingActive = false;
             }
         });
     }
 
+    public class ProgressBarAnimation extends Animation {
+        private ProgressBar progressBar;
+        private float from;
+        private float  to;
 
+        public ProgressBarAnimation(ProgressBar progressBar, float from, float to) {
+            super();
+            this.progressBar = progressBar;
+            this.from = from;
+            this.to = to;
+        }
 
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            super.applyTransformation(interpolatedTime, t);
+            float value = from + (to - from) * interpolatedTime;
+            progressBar.setProgress((int) value);
+        }
 
+    }
 
     private final ClickCallback clickCallback = new ClickCallback() {
 
@@ -109,11 +157,9 @@ public class MainListFragment extends Fragment implements LifecycleOwner {
             }
         }
     };
-
-
-
-
-
-
+    @BindingAdapter("visibleGone")
+        public static void showHide(View view, boolean show) {
+            view.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
 
 }

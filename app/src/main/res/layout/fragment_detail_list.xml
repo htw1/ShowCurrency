@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class ="CurrencyBindingDetailItem">
-        <import type="com.example.htw.currencyconverter.utils.DateUtils"/>
         <import type="android.view.View" />
         <variable name="currencyItemDetailDate" type="com.example.htw.currencyconverter.model.CurrencyDate"/>
         <variable name="currencyBindingItemDetail" type="com.example.htw.currencyconverter.model.CurrencyBinding"/>

@@ -5,14 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.htw.currencyconverter.R;
 import com.example.htw.currencyconverter.callback.ClickCallback;
-import com.example.htw.currencyconverter.callback.CustomItemClickListener;
 import com.example.htw.currencyconverter.databinding.CurrencyBindingDate;
 import com.example.htw.currencyconverter.databinding.CurrencyBindingItem;
 import com.example.htw.currencyconverter.model.Currency;
@@ -31,8 +29,6 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
     final private int CURRENCY_VALUE_VIEW = 0;
     final private int CURRENCY_DATE_VIEW = 1;
 
-
-    CustomItemClickListener mCustomOnItemClickListener;
     ClickCallback clickCallback;
 
     @Nullable
@@ -40,13 +36,14 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
 
     public CurrencyRecyclerAdapter(@Nullable ClickCallback clickCallback) {
 
+
+
         this.clickCallback = clickCallback;
     }
 
     public void setProjectList(final Currency data) {
 
         final List<CurrencyItemsList> newList = ratesFactory(data.getRates(), data.getDate());
-
         if(this.currencyList != newList){
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new CurrencyDiffUtil(newList));
             result.dispatchUpdatesTo(this);
@@ -57,6 +54,7 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
 
 
     public void updateProjectList(final Currency newData) {
+
         final List<CurrencyItemsList> newList = new ArrayList<>(currencyList);
         newList.addAll(ratesFactory(newData.getRates(), newData.getDate()));
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new CurrencyDiffUtil(newList));
@@ -112,6 +110,8 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
 
         if(holder instanceof CurrencyViewHolder ){
             ((CurrencyViewHolder)holder).bindingValue.setCurrencyItem((CurrencyBinding) currencyList.get(position));
+
+
             // for test
 /*            ((CurrencyViewHolder) holder).bindingValue.setClickCustomlistener(new View.OnClickListener() {
                 @Override
@@ -138,9 +138,16 @@ public class CurrencyRecyclerAdapter extends RecyclerView.Adapter<CurrencyRecycl
          return currencyList == null ? 0 : currencyList.size();
     }
 
+
+
+
+
     @Override
     public int getItemViewType(int position) {
+
+
         if(currencyList.get(position) instanceof CurrencyBinding ){
+
             return CURRENCY_VALUE_VIEW;
         }
         if(currencyList.get(position) instanceof CurrencyDate){
