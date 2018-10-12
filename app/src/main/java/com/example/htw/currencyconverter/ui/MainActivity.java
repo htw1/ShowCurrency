@@ -9,14 +9,21 @@ import android.widget.Toast;
 
 
 import com.example.htw.currencyconverter.R;
+import com.example.htw.currencyconverter.callback.OnlineChecker;
 import com.example.htw.currencyconverter.model.CurrencyBinding;
+
+import javax.inject.Inject;
 
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

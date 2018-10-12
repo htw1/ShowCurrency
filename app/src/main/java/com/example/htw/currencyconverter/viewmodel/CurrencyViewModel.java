@@ -81,7 +81,7 @@ public class CurrencyViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<Currency> call, @NonNull Throwable t) {
-                Log.w("onFailure", call.toString());
+                Log.w("Retro_onFailure", call.toString());
                 currencyData.setValue(null);
             }
         });
@@ -91,6 +91,7 @@ public class CurrencyViewModel extends ViewModel {
         actualData = decrementDate();
         if(actualData != null) {
             fixerService.getOldProjectList(actualData).enqueue(new Callback<Currency>() {
+
                 @Override
                 public void onResponse(@NonNull Call<Currency> call, @NonNull Response<Currency> response) {
                     currencyOldData.setValue(response.body());

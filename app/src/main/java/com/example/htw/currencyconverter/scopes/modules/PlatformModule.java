@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.htw.currencyconverter.model.Currency;
 import com.example.htw.currencyconverter.network.FixerService;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
