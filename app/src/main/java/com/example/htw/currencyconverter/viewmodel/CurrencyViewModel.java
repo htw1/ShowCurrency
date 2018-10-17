@@ -1,16 +1,14 @@
 package com.example.htw.currencyconverter.viewmodel;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.databinding.ObservableField;
-import android.os.Handler;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.htw.currencyconverter.CurrencyApp;
+import com.example.htw.currencyconverter.callback.OnlineChecker;
 import com.example.htw.currencyconverter.model.Currency;
 import com.example.htw.currencyconverter.network.FixerService;
 
@@ -20,6 +18,7 @@ import java.util.Calendar;
 
 import javax.inject.Inject;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,17 +26,9 @@ import retrofit2.Retrofit;
 
 public class CurrencyViewModel extends ViewModel {
 
-
-
+    Context context;
     private MutableLiveData<Currency> currencyData;
     private MutableLiveData<Currency> currencyOldData;
-
-    public ObservableField<String> getServerDate() {
-
-        return serverDate;
-    }
-
-    ObservableField<String> serverDate;
     private FixerService fixerService;
     private SimpleDateFormat stringDataFormat = new SimpleDateFormat("yyyy-MM-dd");
     private String actualData;
@@ -45,7 +36,20 @@ public class CurrencyViewModel extends ViewModel {
     @Inject
     Retrofit api;
 
+    @Inject
+    OkHttpClient okHttpClient;
+
+    @Inject
+    OnlineChecker onlineChecker;
+
+    public void getCurrencyViewModel  () {
+         loadDataFromServer();
+
+    }
+
+
     public CurrencyViewModel() {
+
         CurrencyApp.appComponent.inject(this);
         fixerService = api.create(FixerService.class);
         loadDataFromServer();
@@ -67,25 +71,29 @@ public class CurrencyViewModel extends ViewModel {
         return currencyData;
     }
 
-
-
     private void loadDataFromServer(){
         fixerService.getProjectList().enqueue(new Callback<Currency>() {
             @Override
             public void onResponse(@NonNull Call<Currency> call, @NonNull Response<Currency> response) {
                 Log.w("currentList_response", response.toString());
-                serverDate =  new ObservableField<>(response.body().getDate());
-                actualData = response.body().getDate();
-                currencyData.setValue(response.body());
+                if (response.isSuccessful()){
+                    actualData = response.body().getDate();
+                    currencyData.setValue(response.body());
+                }
+
+
+
             }
 
             @Override
             public void onFailure(@NonNull Call<Currency> call, @NonNull Throwable t) {
-                Log.w("Retro_onFailure", call.toString());
+                Log.w("Retro_onFailure", t.getMessage());
                 currencyData.setValue(null);
             }
         });
     }
+
+
 
     public void loadOldDataFromServer(){
         actualData = decrementDate();
@@ -94,6 +102,7 @@ public class CurrencyViewModel extends ViewModel {
 
                 @Override
                 public void onResponse(@NonNull Call<Currency> call, @NonNull Response<Currency> response) {
+
                     currencyOldData.setValue(response.body());
                     Log.w("OldList_call", call.toString());
                     Log.w("OldList_response", response.toString());

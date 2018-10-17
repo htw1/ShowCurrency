@@ -2,19 +2,24 @@ package com.example.htw.currencyconverter.scopes.modules;
 
 import android.content.Context;
 
+import com.example.htw.currencyconverter.callback.OnlineChecker;
 import com.example.htw.currencyconverter.model.Currency;
+import com.example.htw.currencyconverter.network.ConnectivityCheckerUtil.ExperimentalOnlineChecker;
 import com.example.htw.currencyconverter.network.FixerService;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,11 +35,21 @@ public class PlatformModule {
         this.appContext = appContext;
     }
 
+        @Provides
+        @Singleton
+        public OnlineChecker onlineChecker() {
+            Runtime runtime = Runtime.getRuntime();
+            return new ExperimentalOnlineChecker(runtime);
+        }
+
+
     @Provides
     @Singleton
     public HttpLoggingInterceptor loggingInterceptor() {
         return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     }
+
+
 
     @Provides
     @Singleton
@@ -49,6 +64,7 @@ public class PlatformModule {
     @Provides
     @Singleton
     public OkHttpClient okHttpClient(HttpLoggingInterceptor loggingInterceptor) {
+
         return new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .connectTimeout(60, TimeUnit.SECONDS)
@@ -56,9 +72,12 @@ public class PlatformModule {
                 .build();
     }
 
+
+
     @Provides
     @Singleton
     public Retrofit api(OkHttpClient okHttpClient, Gson gson){
+
         return new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
